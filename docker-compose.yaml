@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  api:
+    build: ./api
+    container_name: api_c
+    ports:
+      - "8000:8000"
+    # volumes:
+    #   - .api:/app
+      # - ./app/node_modules
+  db:
+    image: mysql:5.7
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: tms
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  newsfeed:
+    build: ./newsfeed
+    container_name: newsfeed_c
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    # volumes:
+    #   - .newsfeed:/app
+    #   - ./app/node_modules
