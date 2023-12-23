@@ -1,6 +1,6 @@
-FROM php:8.0-fpm
+FROM php:8.0.9-apache
 
-WORKDIR /app
+WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -12,7 +12,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql && docker-php-ext-enable pdo_mys
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY . /app
+COPY . .
 
 RUN composer install --optimize-autoloader --no-dev
 

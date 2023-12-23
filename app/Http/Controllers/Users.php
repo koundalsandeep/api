@@ -25,12 +25,13 @@ class Users extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $token = $user->createToken('MyApp')->accessToken;
             $response = [
                 "success" => true,
                 'message' => "Login successfully",
-                'data' => $user,
-                'token' => $token
+                'data' => [
+                    'user' => $user,
+                    'token' => $user->createToken('MyApp')->accessToken
+                ]
             ];
 
             return response()->json($response, 200);
@@ -55,8 +56,11 @@ class Users extends Controller
         ]);
 
         $response = [
-            'user' => $user,
-            'token' => $user->createToken('token')->plainTextToken
+            "success" => true,
+            'message' => "Register successfully",
+            'data' => [
+                'token' => $user->createToken('MyApp')->accessToken
+            ]
         ];
 
         return response()->json($response, 200);
